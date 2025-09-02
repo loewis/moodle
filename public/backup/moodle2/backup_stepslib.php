@@ -308,6 +308,9 @@ trait backup_question_set_reference_trait {
 
         foreach ($setreferenceconditions as $setreferencecondition) {
             $conditions = json_decode($setreferencecondition, true);
+            if (isset($conditions['questioncategoryid'])) {
+                $conditions = \core_question\question_reference_manager::convert_legacy_set_reference_filter_condition($conditions);
+            }
             $setreferencequestionids += array_keys($randomloader->get_filtered_questions($conditions['filter'], 0));
         }
         if (empty($setreferencequestionids)) {
